@@ -1,10 +1,11 @@
 package pl.sdacademy.java.jdbc.workshop3;
 
 import pl.sdacademy.java.jdbc.model.Film;
+import pl.sdacademy.java.jdbc.model.Rating;
 import pl.sdacademy.java.jdbc.utils.ApplicationPropertiesProvider;
 
-import java.util.List;
-import java.util.Scanner;
+import java.sql.*;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
       Lista powinna być posortowana według tytułu.
  */
 public class Workshop3 {
-
+    //SELECT title, description,release_year,rating FROM film WHERE UPPER(title) LIKE UPPER('%beast%');
     public static void main(String[] args) {
         final String jdbcUrl = ApplicationPropertiesProvider.getApplicationProperties().getProperty("jdbc.url");
 
@@ -31,6 +32,36 @@ public class Workshop3 {
     }
 
     public static List<Film> getFilms(String jdbcUrl, String query) {
-        throw new UnsupportedOperationException("TODO");
+        if(query==null || query.isBlank()){
+            return Collections.emptyList();
+        }
+
+        final List<Film> films = new LinkedList<>();
+        try (final Connection connection = DriverManager.getConnection(jdbcUrl)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT title, description,release_year,rating FROM film WHERE UPPER(title) LIKE UPPER(?) ORDER BY title ;");
+            preparedStatement.setString(1, "%" + query + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                final var calendar = Calendar.getInstance();
+                calendar.setTime(resultSet.getDate("release_year"));
+                int year = calendar.get(Calendar.YEAR);
+
+                String ratingString = resultSet.getString("rating");
+                Rating rating = Rating.getByCode(ratingString).orElseThrow(() -> new IllegalArgumentException("Brak rating"));
+
+                Film film = new Film(
+                        resultSet.getString("title"),
+                        resultSet.getString("description"),
+                        year,
+                        rating
+                );
+                films.add(film);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return films;
     }
+
 }
