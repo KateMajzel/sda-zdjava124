@@ -40,9 +40,10 @@ public class Homework1 {
                     "OR film.title LIKE UPPER('%')\n" +
                     "ORDER BY first_name AND last_name;");
 
-            preparedStatement.setString(1, ); //czym jest String x?
-            preparedStatement.setString(2, );
-            preparedStatement.setString(3, );
+
+            preparedStatement.setString(1, "%" );
+            preparedStatement.setString(2, "%" );
+            preparedStatement.setString(3, "%" );
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
