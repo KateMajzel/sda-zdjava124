@@ -1,0 +1,26 @@
+version: "3.2"
+
+# serwisy do uruchomienia w ramach compose, my definiujemy tylko MySQL
+services:
+  world-hibernate-mysql:
+    # lokalizacja Dockerfile z którego zbudować kontener, operacja jednorazowa
+    build:
+      context: db/world
+
+    # zmienne środowiskowe, oryginalny obraz mysql używa ich do konfiguracji środowiska
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+    # konfiguracja wolumenów, tj. magazynów danych które są w stanie przetrwać restart kontenera
+    # https://docs.docker.com/compose/compose-file/#volumes
+#    volumes:
+#      - type: volume
+#        source: world-hibernate-mysql-volume
+#        target: /var/lib/mysql
+    # mapowania portów, tutaj: 3306 z wnętrza kontenera na 6306 na lokalnej maszynie
+    ports:
+      - "6306:3306"
+
+# wszystkie użyte w serwisach wolumeny trzeba wypisać tutaj
+#volumes:
+#  world-hibernate-mysql-volume:

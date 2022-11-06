@@ -30,7 +30,15 @@ public class Homework2 {
     }
 
     public static List<Actor> getActors(SqlSessionFactory sqlSessionFactory, String query) {
-        throw new UnsupportedOperationException("TODO");
+        if (query == null || query.isBlank() || query.length() < 3) {
+            return Collections.emptyList();
+        }
+
+        final String searchQuery = "%"+query+"%";
+
+        try (final var sqlSession = sqlSessionFactory.openSession()) {
+            return sqlSession.getMapper(ActorMapper.class).getActors(searchQuery);
+        }
     }
 
     static SqlSessionFactory sqlSessionFactory(String jdbcUrl) {
