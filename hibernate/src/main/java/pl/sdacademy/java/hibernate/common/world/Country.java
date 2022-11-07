@@ -1,7 +1,12 @@
 package pl.sdacademy.java.hibernate.common.world;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Country {
 
+    @Id
     private String code;
 
     private String name;
