@@ -1,5 +1,6 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
     <persistence-unit name="WorldPU">
+        <class>pl.sdacademy.java.hibernate.common.world.City</class>
         <class>pl.sdacademy.java.hibernate.common.world.Country</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>

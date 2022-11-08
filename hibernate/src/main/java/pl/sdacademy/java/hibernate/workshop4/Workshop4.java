@@ -1,6 +1,11 @@
 package pl.sdacademy.java.hibernate.workshop4;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 import pl.sdacademy.java.hibernate.common.world.City;
+import pl.sdacademy.java.hibernate.common.world.Country;
 import pl.sdacademy.java.hibernate.utils.ApplicationPropertiesProvider;
 
 import java.util.List;
@@ -26,6 +31,25 @@ public class Workshop4 {
     }
 
     public static List<City> loadCities(String countryCode, Properties properties) {
-        throw new UnsupportedOperationException("TODO");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("WorldPU", properties);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        List<City> cities;
+        try{
+            TypedQuery<City> typedQuery = entityManager.createQuery("""
+                SELECT city FROM City city
+                JOIN FETCH city.country
+                WHERE city.country.code = :code ORDER BY city.name
+                """,
+                    City.class
+            );
+
+            typedQuery.setParameter("code", countryCode);
+
+            cities = typedQuery.getResultList();
+        }finally {
+            entityManagerFactory.close();
+        }
+
+        return cities;
     }
 }
