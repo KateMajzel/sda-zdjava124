@@ -7,6 +7,8 @@ services:
     build:
       context: db/world
 
+    command: --lower_case_table_names=1
+
     # zmienne środowiskowe, oryginalny obraz mysql używa ich do konfiguracji środowiska
     environment:
       MYSQL_ROOT_PASSWORD: example
