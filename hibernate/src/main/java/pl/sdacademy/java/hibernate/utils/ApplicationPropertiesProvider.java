@@ -5,6 +5,7 @@ import java.util.Properties;
 
 public class ApplicationPropertiesProvider {
     private static final Properties worldProperties = loadProperties("/world.properties");
+    private static final Properties sakilaProperties = loadProperties("/sakila.properties");
 
     private static Properties loadProperties(String resource) {
         final var properties = new Properties();
@@ -27,4 +28,7 @@ public class ApplicationPropertiesProvider {
         return worldProperties;
     }
 
+    public static Properties getSakilaProperties() {
+        return sakilaProperties;
+    }
 }

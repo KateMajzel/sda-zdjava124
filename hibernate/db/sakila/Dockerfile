@@ -1,0 +1,2 @@
+FROM mysql:8
+ADD *.sql /docker-entrypoint-initdb.d/

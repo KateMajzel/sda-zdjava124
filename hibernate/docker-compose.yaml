@@ -23,6 +23,28 @@ services:
     ports:
       - "6306:3306"
 
+  sakila-hibernate-mysql:
+    # lokalizacja Dockerfile z którego zbudować kontener, operacja jednorazowa
+    build:
+      context: db/sakila
+
+    command: --lower_case_table_names=1
+
+    # zmienne środowiskowe, oryginalny obraz mysql używa ich do konfiguracji środowiska
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
+    # konfiguracja wolumenów, tj. magazynów danych które są w stanie przetrwać restart kontenera
+    # https://docs.docker.com/compose/compose-file/#volumes
+#    volumes:
+#      - type: volume
+#        source: sakila-hibernate-mysql-volume
+#        target: /var/lib/mysql
+    # mapowania portów, tutaj: 3306 z wnętrza kontenera na 7306 na lokalnej maszynie
+    ports:
+      - "7306:3306"
+
 # wszystkie użyte w serwisach wolumeny trzeba wypisać tutaj
 #volumes:
 #  world-hibernate-mysql-volume:
+#  sakila-hibernate-mysql-volume:

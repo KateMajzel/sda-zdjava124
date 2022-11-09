@@ -9,4 +9,12 @@
             <property name="hibernate.highlight_sql" value="true"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="SakilaPU">
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.highlight_sql" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>
