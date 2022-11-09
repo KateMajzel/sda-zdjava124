@@ -46,6 +46,23 @@ public class Workshop7a {
     }
 
     public static List<Film> findFilmsByDescription(Properties properties, String descriptionPart) {
-        throw new UnsupportedOperationException("TODO");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("SakilaPU", properties);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<Film> query = entityManager.createQuery("""
+                    SELECT film FROM Film film
+                    JOIN FETCH film.actors
+                    JOIN FETCH film.language
+                    LEFT JOIN FETCH film.originalLanguage
+                    WHERE UPPER(film.description) LIKE concat('%',UPPER(:description),'%') ORDER BY film.title
+                     """, Film.class);
+            query.setParameter("description", descriptionPart);
+
+            List<Film> films = query.getResultList();
+            return films;
+
+        } finally {
+            entityManagerFactory.close();
+        }
     }
 }
