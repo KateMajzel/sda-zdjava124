@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
+import pl.sdacademy.java.hibernate.common.sakila.Film;
 import pl.sdacademy.java.hibernate.common.sakila.Staff;
 import pl.sdacademy.java.hibernate.utils.ApplicationPropertiesProvider;
 
@@ -39,6 +40,20 @@ public class Workshop8a {
     }
 
     public static List<Staff> findAllStaff(Properties properties) {
-        throw new UnsupportedOperationException("TODO");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("SakilaPU", properties);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {
+            TypedQuery<Staff> query = entityManager.createQuery("""
+            SELECT staff FROM Staff staff
+            JOIN FETCH staff.address.city.country
+            ORDER BY staff.lastName, staff.firstName
+            """, Staff.class);
+
+            List<Staff> staff = query.getResultList();
+            return staff;
+
+        } finally {
+            entityManagerFactory.close();
+        }
     }
 }
