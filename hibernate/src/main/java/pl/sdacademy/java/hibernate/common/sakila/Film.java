@@ -1,19 +1,33 @@
 package pl.sdacademy.java.hibernate.common.sakila;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Film {
 
+    @Id
+    @Column(name = "film_id")
     private Long filmId;
 
     private String title;
 
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "language_id")
     private Language language;
 
+
+    @ManyToOne
+    @JoinColumn(name = "original_language_id")
     private Language originalLanguage;
 
+    @ManyToMany
+    @JoinTable(name = "film_actor",
+            joinColumns = @JoinColumn(name = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actors;
 
     public Long getFilmId() {

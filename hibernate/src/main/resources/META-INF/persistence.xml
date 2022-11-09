@@ -10,6 +10,13 @@
         </properties>
     </persistence-unit>
     <persistence-unit name="SakilaPU">
+        <class>pl.sdacademy.java.hibernate.common.sakila.Actor</class>
+        <class>pl.sdacademy.java.hibernate.common.sakila.Film</class>
+        <class>pl.sdacademy.java.hibernate.common.sakila.Language</class>
+        <class>pl.sdacademy.java.hibernate.common.sakila.Country</class>
+        <class>pl.sdacademy.java.hibernate.common.sakila.City</class>
+        <class>pl.sdacademy.java.hibernate.common.sakila.Address</class>
+        <class>pl.sdacademy.java.hibernate.common.sakila.Staff</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.show_sql" value="true"/>

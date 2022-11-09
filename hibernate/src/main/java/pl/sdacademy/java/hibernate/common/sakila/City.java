@@ -1,15 +1,20 @@
 package pl.sdacademy.java.hibernate.common.sakila;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class City {
-
+    @Id
+    @Column(name = "city_id")
     private Long cityId;
-
+    @Column(name = "city")
     private String name;
-
+    @ManyToOne
+    @JoinColumn(name = "country_id")
     private Country country;
-
+    @OneToMany(mappedBy = "city")
     private List<Address> addresses;
 
     public Long getCityId() {

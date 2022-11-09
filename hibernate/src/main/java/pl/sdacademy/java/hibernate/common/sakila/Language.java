@@ -1,7 +1,14 @@
 package pl.sdacademy.java.hibernate.common.sakila;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Language {
 
+    @Id
+    @Column(name = "language_id")
     private Long languageId;
 
     private String name;

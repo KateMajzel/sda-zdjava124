@@ -1,15 +1,26 @@
 package pl.sdacademy.java.hibernate.common.sakila;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
 import java.util.List;
 
+@Entity
 public class Actor {
 
+    @Id
+    @Column(name = "actor_id")
     private Long actorId;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @ManyToMany(mappedBy = "actors")
     private List<Film> films;
 
     public Long getActorId() {
