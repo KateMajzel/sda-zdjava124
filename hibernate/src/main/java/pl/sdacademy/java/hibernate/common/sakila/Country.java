@@ -1,9 +1,6 @@
 package pl.sdacademy.java.hibernate.common.sakila;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -11,7 +8,9 @@ import java.util.List;
 public class Country {
     @Id
     @Column(name = "country_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long countryId;
+
     @Column(name = "country")
     private String name;
 
