@@ -8,10 +8,12 @@ import java.util.List;
 public class City {
     @Id
     @Column(name = "city_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cityId;
+
     @Column(name = "city")
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.PERSIST }) //w {} jest tablica - wartości może być więcej
     @JoinColumn(name = "country_id")
     private Country country;
     @OneToMany(mappedBy = "city")
