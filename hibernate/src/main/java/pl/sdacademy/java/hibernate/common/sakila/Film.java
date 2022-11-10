@@ -1,7 +1,10 @@
 package pl.sdacademy.java.hibernate.common.sakila;
 
 import jakarta.persistence.*;
+import pl.sdacademy.java.hibernate.workshop9.Rating;
+import pl.sdacademy.java.hibernate.workshop9.RatingConverter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -29,6 +32,12 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<Actor> actors;
+
+    @Convert(converter = RatingConverter.class)
+    private Rating rating;
+
+    @Column(name = "last_update")
+    private LocalDateTime lastUpdate;
 
     public Long getFilmId() {
         return filmId;
@@ -72,5 +81,21 @@ public class Film {
 
     public void setActors(List<Actor> actors) {
         this.actors = actors;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }
